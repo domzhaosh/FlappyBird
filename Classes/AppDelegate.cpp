@@ -1,11 +1,10 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "LoadingScene.h"
 
 USING_NS_CC;
 
-AppDelegate::AppDelegate() {
-
-}
+AppDelegate::AppDelegate() {}
 
 AppDelegate::~AppDelegate() 
 {
@@ -14,20 +13,22 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
-    if(!glview) {
-        glview = GLView::create("My Game");
-        director->setOpenGLView(glview);
-    }
+    auto eglView = director->getOpenGLView();
 
+    director->setOpenGLView(eglView);
+	eglView->setDesignResolutionSize(288,512, ResolutionPolicy::SHOW_ALL);
+
+	// set the resource directory
+	this->setResourceSearchResolution();
+	
     // turn on display FPS
-    director->setDisplayStats(true);
+    director->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+    auto scene = LoadingScene::create();
 
     // run
     director->runWithScene(scene);
@@ -50,3 +51,14 @@ void AppDelegate::applicationWillEnterForeground() {
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
+
+void AppDelegate::setResourceSearchResolution()
+{
+    std::vector<std::string> paths;
+	paths.push_back("fonts");
+    paths.push_back("image");
+    paths.push_back("sounds");
+    FileUtils::getInstance()->setSearchResolutionsOrder(paths);
+}
+
+

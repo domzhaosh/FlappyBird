@@ -3,3 +3,4 @@ cocos2d/
 proj.linux/
 proj.win32/
 proj.wp8-xaml/
+.DS_Store
