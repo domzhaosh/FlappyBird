@@ -1,0 +1,5 @@
+cocos2d/
+*.swp
+proj.linux/
+proj.win32/
+proj.wp8-xaml/
